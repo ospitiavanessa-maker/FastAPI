@@ -1,14 +1,14 @@
 from fastapi import FastAPI, HTTPException
 from modelos.clientes import Cliente, ClienteCrear, ClienteEditar
-from modelos.facturas import Factura
-from modelos.transacciones import Transaccion
+from modelos.facturas import Factura, FacturaCrear, FacturaEditar
+from modelos.transacciones import Transaccion, TransaccionCrear, TransaccionEditar
 
 app = FastAPI()
 
 
 lista_clientes:list[Cliente] = []
 lista_facturas: list[Factura] = []
-lista_transacciones: list[Transacciones] = []
+lista_transacciones: list[Transaccion] = []
 
 
 #endpoint, para obtener o listar todos los clientes
@@ -88,7 +88,7 @@ async def editar_factura(id_factura: int, datos_factura: Factura):
     pass
 
 
-@app.delate("/facturas/{id_factura}", response_model=Factura)
+@app.delete("/facturas/{id_factura}", response_model=Factura)
 async def eliminar_factura (id_factura):
     pass
 
