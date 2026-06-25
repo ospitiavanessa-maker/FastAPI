@@ -12,5 +12,8 @@ class TransaccionCrear(TransaccionBase):
     pass
 
 
+class TransaccionEditar(TransaccionBase):
+    pass
+
 class Transaccion(TransaccionBase):
     id: int | None = None
