@@ -88,9 +88,32 @@ async def listar_factura(factura_id: int):
                         )            
 
 
-@app.post("/facturas/{id_cliente}", response_model=Factura)
-async def crear_factura(id_cliente: int, datos_factura: Factura):
-    pass
+# Ejemplo de la lógica utilizada para crear la factura
+@app.post("/facturas/")
+async def crear_factura(datos_factura: FacturaCrear):
+    # Buscar cliente
+    cliente_encontrado = None
+    for cliente in lista_clientes:
+        if cliente.id == datos_factura.cliente_id:
+            cliente_encontrado = cliente
+            break
+    
+    # Validar que el cliente exista
+    if not cliente_encontrado:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"El cliente con ID {datos_factura.cliente_id} no existe"
+        )
+    
+    # Transformar y validar datos
+    factura_validada = Factura.model_validate(datos_factura.model_dump())
+    
+    # Asignar datos automáticos
+    factura_validada.cliente = cliente_encontrado
+    factura_validada.id = len(lista_facturas) + 1
+    
+    lista_facturas.append(factura_validada)
+    return factura_validada
 
 
 @app.patch("/facturas/{id_factura}", response_model=Factura)
