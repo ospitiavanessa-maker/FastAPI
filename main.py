@@ -131,7 +131,7 @@ async def eliminar_factura (id_factura):
 
 
 @app.get("/transacciones", response_model=list[Transaccion])
-async def listar_ftransacciones():
+async def listar_transacciones():
     pass
 
 
